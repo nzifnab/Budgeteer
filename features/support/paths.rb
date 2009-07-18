@@ -9,7 +9,11 @@ module NavigationHelpers
     case page_name
     
     when /the homepage/
-      '/'
+    	'/'
+  	when /the login page/
+  		'/users/login'
+  	when /the Account index page/
+  		'/accounts'
     
     # Add more mappings here.
     # Here is a more fancy example:
