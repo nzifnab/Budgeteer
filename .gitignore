@@ -1,4 +1,6 @@
 log/*.log
 tmp/**/*
+tmp/*
+debug.log
 doc/api
 doc/app

@@ -10,6 +10,9 @@ require 'spec/rails'
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 require 'webrat'
+Dir[File.dirname(__FILE__) + "/spec_helpers/**/*.rb"].each do |file|
+  require file
+end
 
 Spec::Runner.configure do |config|
   config.include Webrat::Matchers, :type => :views
@@ -19,6 +22,7 @@ Spec::Runner.configure do |config|
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
   config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
+  config.include ControllerHelpers, :type => :controller
 
   # == Fixtures
   #

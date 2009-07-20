@@ -1,12 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe UsersController do
+	before(:each) do
+		@username = "my_name"
+		@password = "my_password"
+		@user = User.create!(:username => @username, :password => @password)
+	end
+		
 	describe "#enter" do
-		before(:each) do
-			@username = "my_name"
-			@password = "my_password"
-			@user = User.create!(:username => @username, :password => @password)
-		end
 		
 		it "should validate the user's credentials" do
 			User.should_receive(:authenticate).with(@username, @password)
@@ -57,4 +58,16 @@ describe UsersController do
 			end
 		end
 	end
+	
+	describe "#current_user" do
+	  it "should give me a valid user if I am logged in" do
+	    session[:user_id] = @user.id
+	    user = controller.current_user
+	    user.should == @user
+    end
+	  
+	  it "should return false if I am not logged in" do
+	    controller.current_user.should be_false
+    end
+  end
 end

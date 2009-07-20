@@ -1,0 +1,22 @@
+<h1>Add Account</h1>
+<% form_for @account do |f| %>
+  <%= f.label :name, "Name" %>
+  <%= f.text_field :name %><br/>
+  <%= f.label :priority, "Priority" %>
+  <%= f.select(:priority, @priority_options, {:include_blank => true}) %><br/>
+  <%= f.label :add_per_month, "Add Per Month" %>
+  <%= f.text_field :add_per_month %><br/>
+  <%= f.label :add_per_month_as_percent, "Add Per Month As Percent?" %>
+  <%= f.check_box :add_per_month_as_percent %><br/>
+  <%= f.label :has_cap?, "Has Cap?" %>
+  <%= f.check_box :has_cap? %>
+  <%= f.label :cap, "Cap" %>
+  <%= f.text_field :cap %><br/>
+  <%= f.label :has_prerequisite?, "Has Prerequisite?" %>
+  <%= f.check_box :has_prerequisite? %>
+  <%= f.label :prerequisite_id, "Prerequisite" %>
+  <%= f.select(:prerequisite_id, @accounts.collect {|a| [a.name, a.id]}, {:include_blank => true}) %><br/>
+  <%= f.label :enabled, "Enabled?" %>
+  <%= f.check_box :enabled %>
+  <%= f.submit "Add Account" %>
+<%end%>

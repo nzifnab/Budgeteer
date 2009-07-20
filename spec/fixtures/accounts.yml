@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: 
+  priority: 
+  add_per_month: 
+  add_per_month_as_percent: 
+  cap: 
+  prerequisite_id: 
+  amount: 
+  enabled: false
+
+two:
+  name: 
+  priority: 
+  add_per_month: 
+  add_per_month_as_percent: 
+  cap: 
+  prerequisite_id: 
+  amount: 
+  enabled: false

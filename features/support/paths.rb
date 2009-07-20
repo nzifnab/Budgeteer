@@ -14,6 +14,8 @@ module NavigationHelpers
   		'/users/login'
   	when /the Account index page/
   		'/accounts'
+  	when /the New Account page/
+  		'/accounts/new'
     
     # Add more mappings here.
     # Here is a more fancy example:

@@ -9,7 +9,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090718032020) do
+ActiveRecord::Schema.define(:version => 20090719054435) do
+
+  create_table "accounts", :force => true do |t|
+    t.string   "name"
+    t.integer  "priority"
+    t.float    "add_per_month"
+    t.boolean  "add_per_month_as_percent"
+    t.float    "cap"
+    t.integer  "prerequisite_id"
+    t.float    "amount"
+    t.boolean  "enabled"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "username"
