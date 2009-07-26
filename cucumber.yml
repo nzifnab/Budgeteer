@@ -1,0 +1,3 @@
+default: --format pretty
+autotest-all: --drb --format progress --format rerun
+autotest: --drb --format pretty --format rerun

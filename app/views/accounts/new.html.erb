@@ -1,5 +1,6 @@
 <h1>Add Account</h1>
 <% form_for @account do |f| %>
+  <%= error_messages_for 'account' %>
   <%= f.label :name, "Name" %>
   <%= f.text_field :name %><br/>
   <%= f.label :priority, "Priority" %>

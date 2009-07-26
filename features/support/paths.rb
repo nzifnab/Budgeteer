@@ -12,9 +12,9 @@ module NavigationHelpers
     	'/'
   	when /the login page/
   		'/users/login'
-  	when /the Account index page/
+  	when /the Account index page/i
   		'/accounts'
-  	when /the New Account page/
+  	when /the New Account page/i
   		'/accounts/new'
     
     # Add more mappings here.
