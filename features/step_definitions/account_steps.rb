@@ -11,6 +11,18 @@ end
 Given /^I am not logged in$/ do
 end
 
+Given /^I have created (\d+) enabled accounts, and (\d+) disabled ones$/ do |enabled, disabled|
+  @enabled_accounts = []
+  enabled.to_i.times do |i|
+    @enabled_accounts << Account.create!(:name => "actname#{i}", :priority => "#{i}", :add_per_month => "#{7+(i*9)}", :add_per_month_as_percent => "0",  :cap => "#{200+(i*31)}", :enabled => "1")
+  end
+  
+  @disabled_accounts = []
+  disabled.to_i.times do |i|
+    @disabled_accounts << Account.create!(:name => "actname#{i+enabled.to_i}", :priority => "#{i}", :add_per_month => "#{4+(i*5)}", :add_per_month_as_percent => "0", :cap => "#{100+(i*50)}", :enabled => "0")
+  end
+end
+
 When /^I fill in the form for account "([^\"]*)" with valid data$/ do |account_name|
   @account_name = account_name
   fill_in("Name", :with => @account_name)
@@ -35,9 +47,25 @@ When /^I submit the data "([^\"]*)" for the "([^\"]*)" field, "([^\"]*)"$/ do |v
   end
 end
 
+
+Then /^I should see all of my accounts listed$/ do
+  @enabled_accounts.each do |account|
+    response.should contain(account.name)
+    response.should contain("Added per month: #{account.add_per_month}")
+    response.should contain("Cap: #{account.cap}")
+  end
+  
+  @disabled_accounts.each do |account|
+    response.should_not contain(account.name)
+    response.should_not contain("Added per month: #{account.add_per_montb}")
+    response.should_not contain("Cap: #{account.cap}")
+  end
+end
+
 Then /^I should see that account in my accounts list$/ do
-  pending
-  response.should contain(@account_name)
+  pending("Implement account index page!") do
+    response.should contain(@account_name)
+  end
 end
 
 Then /^I should see the rendered template for "([^\"]*)"$/ do |path_name|

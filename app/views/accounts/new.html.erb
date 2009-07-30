@@ -1,23 +1,39 @@
 <h1>Add Account</h1>
 <% form_for @account do |f| %>
   <%= error_messages_for 'account' %>
-  <%= f.label :name, "Name" %>
-  <%= f.text_field :name %><br/>
-  <%= f.label :priority, "Priority" %>
-  <%= f.select(:priority, @priority_options, {:include_blank => true}) %><br/>
-  <%= f.label :add_per_month, "Add Per Month" %>
-  <%= f.text_field :add_per_month %><br/>
-  <%= f.label :add_per_month_as_percent, "Add Per Month As Percent?" %>
-  <%= f.check_box :add_per_month_as_percent %><br/>
-  <%= f.label :has_cap?, "Has Cap?" %>
-  <%= f.check_box :has_cap? %>
-  <%= f.label :cap, "Cap" %>
-  <%= f.text_field :cap %><br/>
-  <%= f.label :has_prerequisite?, "Has Prerequisite?" %>
-  <%= f.check_box :has_prerequisite? %>
-  <%= f.label :prerequisite_id, "Prerequisite" %>
-  <%= f.select(:prerequisite_id, @accounts.collect {|a| [a.name, a.id]}, {:include_blank => true}) %><br/>
-  <%= f.label :enabled, "Enabled?" %>
-  <%= f.check_box :enabled %>
-  <%= f.submit "Add Account" %>
+  <table border="1">
+    <tr>
+      <td><%= f.label :name, "Name" %></td>
+      <td><%= f.text_field :name %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :priority, "Priority" %></td>
+      <td><%= f.select(:priority, @priority_options, {:include_blank => true}) %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :add_per_month, "Add Per Month" %><span style="float:right;">$</span>
+      <br/><%= f.label :add_per_month_as_percent, "Add Per Month As Percent?" %></td>
+      <td><%= f.text_field :add_per_month %><br/>
+      <%= f.check_box :add_per_month_as_percent %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :has_cap?, "Has Cap?" %><br/>
+      <%= f.label :cap, "Cap" %><span style="float:right;">$</span></td>
+      <td><%= f.check_box :has_cap? %><br/>
+      <%= f.text_field :cap %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :has_prerequisite?, "Has Prerequisite?" %><br/>
+      <%= f.label :prerequisite_id, "Prerequisite" %></td>
+      <td><%= f.check_box :has_prerequisite? %><br/>
+      <%= f.select(:prerequisite_id, @accounts.collect {|a| [a.name, a.id]}, {:include_blank => true}) %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :enabled, "Enabled?" %></td>
+      <td><%= f.check_box :enabled %><br/></td>
+    </tr>
+    <tr>
+      <td colspan="2" align="center"><%= f.submit "Add Account" %></td>
+    </tr>
+  </table>
 <%end%>

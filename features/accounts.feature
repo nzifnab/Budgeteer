@@ -18,6 +18,7 @@ Feature:  Accounts
 		Then I should be on the Account index page
 		And I should see that account in my accounts list
 		
+	@error
 	Scenario Outline: Add account with invalid fields
 		Given I am logged in as BudgetTest
 		And I am on the New Account page
@@ -35,8 +36,15 @@ Feature:  Accounts
 		| account3     |        | fill_in     | Add Per Month   | | | | Add per month | can't be blank |
 		
 	Scenarios: submitting bad data
-		| account_name | value1 | field_type1 | field_name1         | value2 | field_type2 | field_name2              | field_name | error                                      |
+		| account_name | value1 | field_type1 | field_name1         | value2 | field_type2 | field_name2              | field_name | error      |
 		| account4     | Bob    | fill_in     | Add Per Month       | | | | Add per month | is not a number |
 		| account5     | 130    | fill_in     | Add Per Month       |        | check       | Add Per Month As Percent | Add per month | cannot be greater than 100% |
 		| account7     |        | check       | Has Prerequisite    |        | select      | Prerequisite             | Prerequisite | is required if 'Has Prerequisite' is selected |
-		| account8     |        | check       | Has Cap             | Bob    | fill_in     | Cap                      | Cap | is not a number                                 |
+		| account8     |        | check       | Has Cap             | Bob    | fill_in     | Cap                      | Cap | is not a number   |
+		
+		
+  Scenario: Accounts display on account index page
+    Given I am logged in as BudgetTest
+    And I have created 5 enabled accounts, and 3 disabled ones
+    When I go to the Account index page
+    Then I should see all of my accounts listed

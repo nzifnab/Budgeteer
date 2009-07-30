@@ -12,6 +12,14 @@ pre {
   font-size: 11px;
 }
 
+td {
+  padding: 3px; 
+}
+
+label {
+  float:left; 
+}
+
 a { color: #000000; }
 a:visited { color: #222222; }
 a:hover { color: #fff; background-color:#000; }
@@ -20,6 +28,7 @@ a:hover { color: #fff; background-color:#000; }
   padding: 2px;
   background-color: red;
   display: table;
+  float:left;
 }
 
 #errorExplanation {
@@ -51,4 +60,3 @@ a:hover { color: #fff; background-color:#000; }
   font-size: 12px;
   list-style: square;
 }
-
