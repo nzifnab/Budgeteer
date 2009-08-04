@@ -14,12 +14,12 @@ end
 Given /^I have created (\d+) enabled accounts, and (\d+) disabled ones$/ do |enabled, disabled|
   @enabled_accounts = []
   enabled.to_i.times do |i|
-    @enabled_accounts << Account.create!(:name => "actname#{i}", :priority => "#{i}", :add_per_month => "#{7+(i*9)}", :add_per_month_as_percent => "0",  :cap => "#{200+(i*31)}", :enabled => "1")
+    @enabled_accounts << Account.create!(:name => "actname#{i}", :priority => "#{i}", :add_per_month => "#{7+(i*9)}", :add_per_month_as_percent => "0",  :cap => "#{200+(i*31)}", :enabled => "1", :user_id => @user.id, :amount => 345.15)
   end
   
   @disabled_accounts = []
   disabled.to_i.times do |i|
-    @disabled_accounts << Account.create!(:name => "actname#{i+enabled.to_i}", :priority => "#{i}", :add_per_month => "#{4+(i*5)}", :add_per_month_as_percent => "0", :cap => "#{100+(i*50)}", :enabled => "0")
+    @disabled_accounts << Account.create!(:name => "actname#{i+enabled.to_i}", :priority => "#{i}", :add_per_month => "#{4+(i*5)}", :add_per_month_as_percent => "0", :cap => "#{100+(i*50)}", :enabled => "0", :user_id => @user.id, :amount => 249.85)
   end
 end
 
@@ -51,21 +51,21 @@ end
 Then /^I should see all of my accounts listed$/ do
   @enabled_accounts.each do |account|
     response.should contain(account.name)
-    response.should contain("Added per month: #{account.add_per_month}")
-    response.should contain("Cap: #{account.cap}")
+    response.should contain("Added per month: $#{account.add_per_month}")
+    response.should contain("Cap: $#{account.cap}")
+    response.should contain("Amount: $#{account.amount}")
   end
   
   @disabled_accounts.each do |account|
-    response.should_not contain(account.name)
-    response.should_not contain("Added per month: #{account.add_per_montb}")
-    response.should_not contain("Cap: #{account.cap}")
+    response.should contain(account.name)
+    response.should contain("Added per month: $#{account.add_per_month}")
+    response.should contain("Cap: $#{account.cap}")
+    response.should contain("Amount: $#{account.amount}")
   end
 end
 
 Then /^I should see that account in my accounts list$/ do
-  pending("Implement account index page!") do
     response.should contain(@account_name)
-  end
 end
 
 Then /^I should see the rendered template for "([^\"]*)"$/ do |path_name|

@@ -2,11 +2,14 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/accounts/index" do
   before(:each) do
-    render 'accounts/index'
+    @accounts = []
+    @accounts << stub_model(Account, :name => "name1") << stub_model(Account, :name => "name2") << stub_model(Account, :name => "name3")
   end
 
-  #Delete this example and add some real ones or delete this file
-  it "should tell you where to find the file" do
-    response.should have_tag('p', %r[Find me in app/views/accounts/index])
+  it "should render a collection of account partials" do
+    template.should_receive(:render).with(:partial => "account", :collection => @accounts).and_return "rendered from partial"
+    assigns[:accounts] = @accounts
+    render 'accounts/index.html.erb'
+    response.should contain "rendered from partial"
   end
 end

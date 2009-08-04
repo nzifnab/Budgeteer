@@ -73,7 +73,14 @@ describe AccountsController do
 	  
 	  describe "an authenticated user" do
 	    before(:each) do
-	      login_as_user
+	      @user = login_as_user
+      end
+      
+      it "should send the accounts associated to the user to the view" do
+        accounts = [stub_model(Account, :user => @user), stub_model(Account, :user => @user), stub_model(Account, :user => @user)]
+        Account.should_receive(:find_all_by_user_id).with(@user.id, :order => "priority DESC, amount ASC, enabled DESC" ).and_return(accounts)
+        get :index
+        assigns[:accounts].should == accounts
       end
     end
   end
@@ -109,6 +116,11 @@ describe AccountsController do
       
       it "should create a new account object" do
         Account.should_receive(:new).with(@valid_params[:account])
+        post :create, @valid_params
+      end
+      
+      it "should set the user id to the account" do
+        @account.should_receive(:user_id=).with(@login_user.id)
         post :create, @valid_params
       end
       
