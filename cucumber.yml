@@ -1,3 +1,3 @@
 default: --format pretty
-autotest-all: --drb --format progress
-autotest: --drb --format pretty
+autotest-all: --format progress
+autotest: --format pretty

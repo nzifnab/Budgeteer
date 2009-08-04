@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/users/login" do
 	it "should render a form to login" do
-		render "users/login.html.erb"
+		render "users/login.html"
 		response.should have_selector("form[method=post]", :action => enter_users_path) do |form|
 			form.should have_selector(
 				"input[type=text]",

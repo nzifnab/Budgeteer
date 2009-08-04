@@ -7,9 +7,19 @@ describe "/accounts/index" do
   end
 
   it "should render a collection of account partials" do
-    template.should_receive(:render).with(:partial => "account", :collection => @accounts).and_return "rendered from partial"
+    #template.should_receive(:render).with(:partial => "account", :collection => @accounts).and_return "rendered from partial"
     assigns[:accounts] = @accounts
-    render 'accounts/index.html.erb'
-    response.should contain "rendered from partial"
+    
+    template.
+      should_receive(:render).
+      with(:partial => "account", :locals => anything()).
+      exactly(3).
+      times.
+      and_return( "render 1", "render 2", "render 3" )
+    
+    render 'accounts/index.html'
+    3.times do |i|
+      response.should contain "render #{i+1}"
+    end
   end
 end

@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  has_many :accounts
+  
 	require 'digest/md5'
 	def password=(value)
 		self.password_hash = User::hash_value(value)

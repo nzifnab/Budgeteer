@@ -1,0 +1,9 @@
+- form_for account_history, :url => changefunds_account_path(account), :html => {:method => :put, :class => "account_history_form", :id => "account_history_#{account.id}"} do |f|
+  = f.label :amount, "Amount", :class => "row_form_small"
+  = f.text_field :amount, :id => "account_history_amount_#{account.id}", :class => "row_form_textfield"
+  %br
+  = f.label :description, "Description"
+  = f.text_area :description, :id => "account_history_description_#{account.id}", :class => "row_form_textarea"
+  %br
+  = f.submit "Withdraw", :id => "withdraw_#{account.id}", :class => "row_form_submit"
+  = f.submit "Deposit", :id => "deposit_#{account.id}", :class => "row_form_submit"

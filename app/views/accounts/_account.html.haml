@@ -1,0 +1,29 @@
+%div{ :class => "priority_#{account.priority}" }
+  %div{ :id => "account_row_#{account.id}", :class => "account_row_#{display_type( account, highlight )}" }
+    .row_title Name: #{account.name}&nbsp;&nbsp;
+    = link_to "Edit", edit_account_path(account), :id => "edit_account_#{account.id}", :class => "edit_row"
+    .row_form
+      = render :partial => 'changefunds_form', :locals => {:account_history => account_history, :account => account}
+    %br
+    .row_content
+      .row
+        .row_field> Amount:
+        .row_value $#{ account.amount || "0" }
+      .row
+        .row_field> Priority:
+        .row_value= account.priority
+      .row
+        .row_field> Added per month:
+        .row_value= account.add_per_month_as_percent ? ( account.add_per_month.to_s + "%" ) : ( "$" + account.add_per_month.to_s )
+    .row_content
+      .row
+        .row_field> Cap:
+        .row_value= account.cap ? ( "$#{account.cap.to_s}" ) : "NONE"
+      .row
+        .row_field> Prerequisite:
+        .row_value= account.prerequisite ? account.prerequisite.name : "NONE"
+      .row
+        .row_field> Status:
+        %div{ :class => ( account.enabled ? "row_enabled" : "row_disabled" ) }
+          = account.enabled ? "enabled" : "disabled"
+    %br.clear

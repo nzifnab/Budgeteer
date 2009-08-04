@@ -1,0 +1,257 @@
+!base_color = #004100
+!border_color = #005E00
+!lightest_color = #BFFEBF
+!lighter_color = #80FE80
+!bright_color = #00FF00
+
+body
+  letter-spacing: 1px
+  background-color: #fff
+  color: #333
+  font:
+    family: verdana, arial, helvetica, sans-serif
+    size: 13px
+  line-height: 18px
+
+p, ol, ul, td
+  font:
+    family: verdana, arial, helvetica, sans-serif
+    size: 13px
+  line-height: 18px
+
+pre
+  background-color: #eee
+  padding: 10px
+  font-size: 11px
+
+td
+  padding: 3px
+
+label
+  float: left
+  
+br.clear
+  clear: both
+
+a
+  color: #000000
+
+  &:visited
+    color: #222222
+
+  &:hover
+    color: #fff
+    background-color: #000
+
+  &.edit_row
+    padding:
+      left: 4px
+      top: 3px
+      right: 4px
+      bottom: 3px
+    text-align: center
+    background-color = !lightest_color
+    margin-top: 3px
+    margin-left: 3px
+    border:
+      style: solid
+      width: 1px
+      color = !border_color
+
+    &:visited
+      color: #000000
+
+    &:hover
+      background-color = !base_color
+      color = !lighter_color
+      font-weight: bold
+
+
+div
+  &.account_row_odd, &.account_row_even, &.account_row_highlight
+    border:
+      style: solid
+      width: 1px
+    padding: 4px
+    
+  &.account_row_highlight
+    background-color = !bright_color
+    border-width: 2px
+    border-color: !border_color
+
+  &.account_row_disabled
+    border:
+      style: solid
+      width: 1px
+    padding: 4px
+    font-style: italic
+    color: #333333
+    background-color: #B7B7B7
+    
+    .row_form
+      visibility: hidden
+  
+  !field_width = 120px
+  !row_width = 240px
+  
+  &.row_title
+    font-size: 15px
+    margin-bottom: 5px
+    border:
+      style: inset
+      width: 2px
+      color: #3F3F3F
+    padding: 2px
+    font-weight: bold
+    float: left
+    width = 300px
+    background-color = !base_color
+    color = !lighter_color
+
+  &.row_content
+    float: left
+    vertical-align: top
+
+  &.row
+    font-size: 10px
+    margin: 0px
+    width = !row_width
+    height: 20px
+
+  &.row_field
+    font-weight: bold
+    width = !field_width
+    border:
+      style: solid
+      width: 1px
+    text-align: right
+    padding-right: 2px
+    margin-right: 5px
+    float: left
+    background-color = !border_color
+    color = !lighter_color
+
+  !value_width = !row_width - !field_width - 19
+  &.row_value, &.row_disabled
+    margin:
+      left: 3px
+      right: 3px
+    width = !value_width
+    float: left
+    background-color = !lightest_color
+    padding:
+      left: 1px
+      right: 1px
+    border:
+      style: inset
+      width: 1px
+      
+  &.row_enabled
+    color = !bright_color
+    background-color = !border_color
+    height: 18px
+    width: 60px
+    margin-left = ( 3px + ( !value_width / 2 ) ) - 30px
+    font:
+      size: 11px
+      weight: bold
+    display: inline-block
+    text-align: center
+    border:
+      style: inset
+      width: 1px
+      color: white
+      
+  &.row_disabled
+    color: red
+
+  !color = #8FFF8F
+  !background_color = !base_color
+  !increment_color = (!lighter_color - !base_color)/9
+  &.priority_1, &.priority_2, &.priority_3, &.priority_4, &.priority_5, &.priority_6, &.priority_7, &.priority_8, &.priority_9, &.priority_10
+    width: 800px
+
+  @for !i from 1 through 10
+    &.priority_#{!i}
+      background-color = !background_color
+
+    !background_color = !background_color + !increment_color
+    
+  &.row_form
+    !form_width = 300px
+    
+    float: right
+    
+    form.account_history_form
+      background-color = !lightest_color
+      width = !form_width
+      text-align: center
+      
+      label
+        width = !form_width - 75px
+        display: block
+        background-color = !lighter_color
+        color = !base_color
+        font-weight: bold
+        float: none
+        margin-left: auto
+        margin-right: auto
+        border-style: solid
+        border-width: 1px
+        
+        &.row_form_small
+          width = 75px
+          float: left
+          margin:
+            left: 37px
+            top: 4px
+            bottom: 3px
+            right: 0px
+        
+      input
+        &.row_form_textfield
+          width = !form_width - 166px
+          margin:
+            left: 0px
+            top: 3px
+            bottom: 3px
+            right: 22px
+            
+        &.row_form_submit
+          width: 75px
+        
+      textarea.row_form_textarea
+        width = !form_width - 50px
+        height: 50px
+
+.fieldWithErrors
+  padding: 2px
+  background-color: red
+  display: table
+  float: left
+
+#errorExplanation
+  width: 400px
+  border: 2px solid red
+  padding: 7px
+  padding-bottom: 12px
+  margin-bottom: 20px
+  background-color: #f0f0f0
+
+  h2
+    text-align: left
+    font-weight: bold
+    padding: 5px 5px 5px 15px
+    font-size: 12px
+    margin: -7px
+    background-color: #c00
+    color: #fff
+
+  p
+    color: #333
+    margin-bottom: 0
+    padding: 5px
+
+  ul li
+    font-size: 12px
+    list-style: square

@@ -1,5 +1,7 @@
 class Account < ActiveRecord::Base
   belongs_to :prerequisite, :class_name => "Account"
+  belongs_to :user
+  has_many :account_histories
   validates_presence_of :name, :priority, :add_per_month
   validates_presence_of :cap, :if => Proc.new{ |account| account.has_cap }, :message => "is required with 'Has a Cap' selected"
   validates_presence_of :prerequisite_id, :if => Proc.new{ |account| account.has_prerequisite }, :message => "is required if 'Has Prerequisite' is selected"

@@ -1,35 +1,192 @@
-body { background-color: #fff; color: #333; }
-
-body, p, ol, ul, td {
+body {
+  letter-spacing: 1px;
+  background-color: #fff;
+  color: #333;
   font-family: verdana, arial, helvetica, sans-serif;
-  font-size:   13px;
-  line-height: 18px;
-}
+  font-size: 13px;
+  line-height: 18px; }
+
+p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px; }
 
 pre {
   background-color: #eee;
   padding: 10px;
-  font-size: 11px;
-}
+  font-size: 11px; }
 
 td {
-  padding: 3px; 
-}
+  padding: 3px; }
 
 label {
-  float:left; 
-}
+  float: left; }
 
-a { color: #000000; }
-a:visited { color: #222222; }
-a:hover { color: #fff; background-color:#000; }
+br.clear {
+  clear: both; }
+
+a {
+  color: #000000; }
+  a:visited {
+    color: #222222; }
+  a:hover {
+    color: #fff;
+    background-color: #000; }
+  a.edit_row {
+    padding-left: 4px;
+    padding-top: 3px;
+    padding-right: 4px;
+    padding-bottom: 3px;
+    text-align: center;
+    background-color: #bffebf;
+    margin-top: 3px;
+    margin-left: 3px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #005e00; }
+    a.edit_row:visited {
+      color: #000000; }
+    a.edit_row:hover {
+      background-color: #004100;
+      color: #80fe80;
+      font-weight: bold; }
+
+div.account_row_odd, div.account_row_even, div.account_row_highlight {
+  border-style: solid;
+  border-width: 1px;
+  padding: 4px; }
+div.account_row_highlight {
+  background-color: lime;
+  border-width: 2px;
+  border-color: !border_color; }
+div.account_row_disabled {
+  border-style: solid;
+  border-width: 1px;
+  padding: 4px;
+  font-style: italic;
+  color: #333333;
+  background-color: #B7B7B7; }
+  div.account_row_disabled .row_form {
+    visibility: hidden; }
+div.row_title {
+  font-size: 15px;
+  margin-bottom: 5px;
+  border-style: inset;
+  border-width: 2px;
+  border-color: #3F3F3F;
+  padding: 2px;
+  font-weight: bold;
+  float: left;
+  width: 300px;
+  background-color: #004100;
+  color: #80fe80; }
+div.row_content {
+  float: left;
+  vertical-align: top; }
+div.row {
+  font-size: 10px;
+  margin: 0px;
+  width: 240px;
+  height: 20px; }
+div.row_field {
+  font-weight: bold;
+  width: 120px;
+  border-style: solid;
+  border-width: 1px;
+  text-align: right;
+  padding-right: 2px;
+  margin-right: 5px;
+  float: left;
+  background-color: #005e00;
+  color: #80fe80; }
+div.row_value, div.row_disabled {
+  margin-left: 3px;
+  margin-right: 3px;
+  width: 101px;
+  float: left;
+  background-color: #bffebf;
+  padding-left: 1px;
+  padding-right: 1px;
+  border-style: inset;
+  border-width: 1px; }
+div.row_enabled {
+  color: lime;
+  background-color: #005e00;
+  height: 18px;
+  width: 60px;
+  margin-left: 23.5px;
+  font-size: 11px;
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
+  border-style: inset;
+  border-width: 1px;
+  border-color: white; }
+div.row_disabled {
+  color: red; }
+div.priority_1, div.priority_2, div.priority_3, div.priority_4, div.priority_5, div.priority_6, div.priority_7, div.priority_8, div.priority_9, div.priority_10 {
+  width: 800px; }
+div.priority_1 {
+  background-color: #004100; }
+div.priority_2 {
+  background-color: #0e560e; }
+div.priority_3 {
+  background-color: #1c6b1c; }
+div.priority_4 {
+  background-color: #2a802a; }
+div.priority_5 {
+  background-color: #389538; }
+div.priority_6 {
+  background-color: #46aa46; }
+div.priority_7 {
+  background-color: #54bf54; }
+div.priority_8 {
+  background-color: #62d462; }
+div.priority_9 {
+  background-color: #70e970; }
+div.priority_10 {
+  background-color: #7efe7e; }
+div.row_form {
+  float: right; }
+  div.row_form form.account_history_form {
+    background-color: #bffebf;
+    width: 300px;
+    text-align: center; }
+    div.row_form form.account_history_form label {
+      width: 225px;
+      display: block;
+      background-color: #80fe80;
+      color: #004100;
+      font-weight: bold;
+      float: none;
+      margin-left: auto;
+      margin-right: auto;
+      border-style: solid;
+      border-width: 1px; }
+      div.row_form form.account_history_form label.row_form_small {
+        width: 75px;
+        float: left;
+        margin-left: 37px;
+        margin-top: 4px;
+        margin-bottom: 3px;
+        margin-right: 0px; }
+    div.row_form form.account_history_form input.row_form_textfield {
+      width: 134px;
+      margin-left: 0px;
+      margin-top: 3px;
+      margin-bottom: 3px;
+      margin-right: 22px; }
+    div.row_form form.account_history_form input.row_form_submit {
+      width: 75px; }
+    div.row_form form.account_history_form textarea.row_form_textarea {
+      width: 250px;
+      height: 50px; }
 
 .fieldWithErrors {
   padding: 2px;
   background-color: red;
   display: table;
-  float:left;
-}
+  float: left; }
 
 #errorExplanation {
   width: 400px;
@@ -37,26 +194,19 @@ a:hover { color: #fff; background-color:#000; }
   padding: 7px;
   padding-bottom: 12px;
   margin-bottom: 20px;
-  background-color: #f0f0f0;
-}
-
-#errorExplanation h2 {
-  text-align: left;
-  font-weight: bold;
-  padding: 5px 5px 5px 15px;
-  font-size: 12px;
-  margin: -7px;
-  background-color: #c00;
-  color: #fff;
-}
-
-#errorExplanation p {
-  color: #333;
-  margin-bottom: 0;
-  padding: 5px;
-}
-
-#errorExplanation ul li {
-  font-size: 12px;
-  list-style: square;
-}
+  background-color: #f0f0f0; }
+  #errorExplanation h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 5px 5px 15px;
+    font-size: 12px;
+    margin: -7px;
+    background-color: #c00;
+    color: #fff; }
+  #errorExplanation p {
+    color: #333;
+    margin-bottom: 0;
+    padding: 5px; }
+  #errorExplanation ul li {
+    font-size: 12px;
+    list-style: square; }

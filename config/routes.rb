@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
 	map.resources :users, :collection => { :login => :get, :enter => :put }
-	map.resources :accounts
+	map.resources :accounts, :member => { :changefunds => :put }
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

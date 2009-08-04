@@ -1,0 +1,19 @@
+%h1 Accounts
+- odd_or_even = 'odd'
+- @accounts.each do |account|
+  = render :partial => 'account', :locals => {:account => account, :highlight => @account, :account_history => (@account_history || AccountHistory.new)}
+<script type="text/javascript">
+\//<!--
+function highlighted()
+{
+- if @account
+  setTimeout( 'unhighlight();', 2000 );
+}
+
+- if @account
+  function unhighlight()
+  {
+  $("account_row_#{@account.id}").className = "account_row_#{display_type( @account, nil )}"
+  }
+\//-->
+</script>

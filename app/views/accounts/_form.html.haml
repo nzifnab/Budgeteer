@@ -1,0 +1,45 @@
+- form_for account do |f|
+  = f.error_messages
+  %table{ :border => "1" }
+    %tr
+      %td= f.label :name, "Name"
+      %td= f.text_field :name
+    %tr
+      %td= f.label :priority, "Priority"
+      %td= f.select(:priority, priority_options, {:include_blank => true})
+    %tr
+      %td
+        = f.label :add_per_month, "Add Per Month"
+        %span{ :style => "float:right;" } $
+        %br
+        = f.label :add_per_month_as_percent, "Add Per Month As Percent?"
+      %td
+        = f.text_field :add_per_month
+        %br
+        = f.check_box :add_per_month_as_percent
+    %tr
+      %td
+        = f.label :has_cap?, "Has Cap?"
+        %br
+        = f.label :cap, "Cap"
+        %span{ :style => "float:right;" } $
+      %td
+        = f.check_box :has_cap?
+        %br
+        = f.text_field :cap
+    %tr
+      %td
+        = f.label :has_prerequisite?, "Has Prerequisite?"
+        %br
+        = f.label :prerequisite_id, "Prerequisite"
+      %td
+        = f.check_box :has_prerequisite?
+        %br
+        = f.select(:prerequisite_id, accounts.collect {|a| [a.name, a.id]}, {:include_blank => true})
+    %tr
+      %td= f.label :enabled, "Enabled?"
+      %td
+        = f.check_box :enabled
+        %br
+    %tr
+      %td{ :colspan => "2", :align => "center" }= f.submit "Submit"

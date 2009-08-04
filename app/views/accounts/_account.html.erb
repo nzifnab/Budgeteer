@@ -1,8 +1,0 @@
-<div class="account_row">
-  <div class="row_field">Name: <%= account.name %></div>
-  <div class="row_field">Amount: $<%= account.amount || "0" %>
-  <div class="row_field">Priority: <%= account.priority %></div>
-  <div class="row_field">Added per month: <%= account.add_per_month_as_percent ? ( account.add_per_month.to_s + "%" ) : ( "$" + account.add_per_month.to_s ) %></div>
-  <div class="row_field">Cap: <%= account.cap ? ( "$#{account.cap.to_s}" ) : "NONE" %></div>
-  <div class="row_field">Prerequisite: <%= account.prerequisite ? account.prerequisite.name : "NONE" %></div>
-</div>

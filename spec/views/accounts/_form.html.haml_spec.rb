@@ -9,7 +9,7 @@ describe "/accounts/_form" do
   end
   
   def render_new_account_page
-    render "accounts/_form.html.erb", :locals => {:account => @account, :accounts => @accounts, :priority_options => @priority_options}
+    render "accounts/_form.html", :locals => {:account => @account, :accounts => @accounts, :priority_options => @priority_options}
   end
   
   context "New Account Form" do
@@ -17,7 +17,7 @@ describe "/accounts/_form" do
       render_new_account_page
       
       response.should have_selector("form[method=post]", :action => accounts_path) do |form|
-        form.inner_html.should have_selector("input[type=submit]", :value => "Add Account")
+        form.inner_html.should have_selector("input[type=submit]", :value => "Submit")
       end
     end
     

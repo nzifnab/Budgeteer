@@ -16,6 +16,10 @@ module NavigationHelpers
   		'/accounts'
   	when /the New Account page/i
   		'/accounts/new'
+  	when /the edit account page for (.*)/i
+  	  edit_account_path(Account.find_by_name($1))
+  	when /the Account main page/i
+  	  '/accounts/index'
     
     # Add more mappings here.
     # Here is a more fancy example:
