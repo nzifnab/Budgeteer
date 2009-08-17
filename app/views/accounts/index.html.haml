@@ -1,7 +1,17 @@
 %h1 Accounts
 - odd_or_even = 'odd'
-- @accounts.each do |account|
-  = render :partial => 'account', :locals => {:account => account, :highlight => @account, :account_history => (@account_history || AccountHistory.new)}
+.content_left
+  - @accounts.each do |account|
+    = render :partial => 'accounts/account', :locals => {:account => account, :highlight => @account, :account_history => (@account_history || AccountHistory.new)}
+.content_left#income_form
+  %h2 Income
+  - form_for @income do |f|
+    = f.error_messages
+    = render :partial => 'incomes/form', :locals => {:f => f}
+- if @history
+  #account_history_list
+    %h2= @account ? "#{@account.name} History" : "Income Distribution"
+    = render :partial => 'account_histories/account_history', :collection => @history, :locals => { :is_history => (@account ? true : false) }
 <script type="text/javascript">
 \//<!--
 function highlighted()
@@ -14,6 +24,12 @@ function highlighted()
   function unhighlight()
   {
   $("account_row_#{@account.id}").className = "account_row_#{display_type( @account, nil )}"
+  }
+  
+- if @history
+  function account_history_show_description(history_id)
+  {
+  $("history_description_" + history_id).style.visibility = "visible"
   }
 \//-->
 </script>

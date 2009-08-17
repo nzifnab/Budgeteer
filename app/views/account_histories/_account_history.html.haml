@@ -1,0 +1,23 @@
+.account_history_row{ :id => "act_row_#{account_history.id}", :onclick => "account_history_show_description_#{account_history.id}();", :onmouseover => "$('act_row_#{account_history.id}').style.backgroundColor = '#33FF33';", :onmouseout => "$('act_row_#{account_history.id}').style.backgroundColor = '';" }
+  .row
+    .row_field= is_history ? "Date" : "Account"
+    .row_value= is_history ? account_history.created_at_date : account_history.account.name
+  .row
+    .row_field Changed
+    .row_value= account_history.amount
+  %div{ :id => "history_description_#{account_history.id}", :class => "history_description" }>
+<script type="text/javascript">
+\//<!--
+function account_history_show_description_#{account_history.id}()
+{
+hist_obj = $("history_description_#{account_history.id}")
+if( hist_obj.innerHTML == "" )
+{
+hist_obj.innerHTML = "#{escape_javascript(account_history.description)}";
+}else
+{
+hist_obj.innerHTML = ""
+}
+}
+\//-->
+</script>

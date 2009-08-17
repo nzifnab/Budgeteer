@@ -1,6 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
 	map.resources :users, :collection => { :login => :get, :enter => :put }
 	map.resources :accounts, :member => { :changefunds => :put }
+	map.resources :incomes
+	map.connect '/', :controller => 'accounts', :action => 'index'
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

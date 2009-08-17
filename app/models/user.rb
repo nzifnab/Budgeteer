@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :accounts
+  has_many :incomes
   
 	require 'digest/md5'
 	def password=(value)

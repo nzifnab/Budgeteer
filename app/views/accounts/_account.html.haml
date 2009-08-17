@@ -3,7 +3,7 @@
     .row_title Name: #{account.name}&nbsp;&nbsp;
     = link_to "Edit", edit_account_path(account), :id => "edit_account_#{account.id}", :class => "edit_row"
     .row_form
-      = render :partial => 'changefunds_form', :locals => {:account_history => account_history, :account => account}
+      = render :partial => 'accounts/changefunds_form', :locals => {:account_history => account_history, :account => account}
     %br
     .row_content
       .row
@@ -15,6 +15,9 @@
       .row
         .row_field> Added per month:
         .row_value= account.add_per_month_as_percent ? ( account.add_per_month.to_s + "%" ) : ( "$" + account.add_per_month.to_s )
+      .row
+        .row_field> Account History:
+        .row_value= link_to "History", :controller => 'accounts', :action => 'index', :account_id => account.id
     .row_content
       .row
         .row_field> Cap:

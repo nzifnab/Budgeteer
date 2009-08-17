@@ -25,20 +25,27 @@ label {
 br.clear {
   clear: both; }
 
+p.flash_notice {
+  color: green; }
+p.flash_warning {
+  font-size: 20px;
+  color: red; }
+
 a {
-  color: #000000; }
+  text-align: center;
+  background-color: #bffebf;
+  color: #004100; }
   a:visited {
-    color: #222222; }
+    color: #004100; }
   a:hover {
-    color: #fff;
-    background-color: #000; }
+    background-color: #004100;
+    color: #80fe80;
+    font-weight: bold; }
   a.edit_row {
     padding-left: 4px;
     padding-top: 3px;
     padding-right: 4px;
     padding-bottom: 3px;
-    text-align: center;
-    background-color: #bffebf;
     margin-top: 3px;
     margin-left: 3px;
     border-style: solid;
@@ -46,14 +53,11 @@ a {
     border-color: #005e00; }
     a.edit_row:visited {
       color: #000000; }
-    a.edit_row:hover {
-      background-color: #004100;
-      color: #80fe80;
-      font-weight: bold; }
 
 div.account_row_odd, div.account_row_even, div.account_row_highlight {
   border-style: solid;
   border-width: 1px;
+  border-color: #bffebf;
   padding: 4px; }
 div.account_row_highlight {
   background-color: lime;
@@ -181,12 +185,34 @@ div.row_form {
     div.row_form form.account_history_form textarea.row_form_textarea {
       width: 250px;
       height: 50px; }
+div.content_left {
+  float: left;
+  margin-left: 10px; }
+  div.content_left h2 {
+    text-align: center;
+    font-weight: bold;
+    color: #004100; }
+  div.content_left#income_form {
+    margin-left: 20px;
+    padding: 8px;
+    background-color: #bffebf; }
+div#account_history_list {
+  background-color: #bffebf;
+  float: left;
+  padding: 6px;
+  margin-left: 8px; }
+div.account_history_row {
+  padding: 3px;
+  background-color: #004100;
+  margin-top: 5px; }
+div.history_description {
+  background-color: #80fe80;
+  color: #004100; }
 
 .fieldWithErrors {
   padding: 2px;
   background-color: red;
-  display: table;
-  float: left; }
+  display: table; }
 
 #errorExplanation {
   width: 400px;

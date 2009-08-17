@@ -9,7 +9,11 @@ class AccountsController < ApplicationController
 
   def index
     @accounts = Account.find_all_by_user_id( current_user.id, :order => 'enabled DESC, priority ASC, amount DESC, name ASC' )
-    @account = Account.find( params[:account_id] ) if params[:account_id]
+    if params[:account_id]
+      @account = Account.find( params[:account_id] )
+      @history = AccountHistory.find( :all, :conditions => { :account_id => @account }, :order => 'created_at DESC')
+    end
+    @income = Income.new
   end
 
 	def update
