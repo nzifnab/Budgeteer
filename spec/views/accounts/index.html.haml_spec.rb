@@ -20,8 +20,8 @@ describe "/accounts/index" do
       and_return( "render 1", "render 2", "render 3" )
     
     render 'accounts/index.html'
-    #3.times do |i|
-    #  response.should contain("render #{i+1}")
-    #end
+    3.times do |i|
+      response.should contain("render #{i+1}")
+    end
   end
 end
