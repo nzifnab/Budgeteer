@@ -3,7 +3,7 @@
     .row_field= is_history ? "Date" : "Account"
     .row_value= is_history ? account_history.created_at_date : account_history.account.name
   .row
-    .row_field Changed
+    .row_field> Change:
     .row_value= account_history.amount
   %div{ :id => "history_description_#{account_history.id}", :class => "history_description" }>
 <script type="text/javascript">

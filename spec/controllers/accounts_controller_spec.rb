@@ -136,7 +136,7 @@ describe AccountsController do
         
         it "should redirect to the accounts index page" do
           post :create, @valid_params
-          response.should redirect_to :action => 'index', :account_id => @account.id
+          response.should redirect_to(:action => 'index', :account_id => @account.id)
         end
       end
       
@@ -149,7 +149,7 @@ describe AccountsController do
         
         it "should render the 'new' account page" do
           post :create, @valid_params
-          response.should render_template 'accounts/new.html.haml'
+          response.should render_template('accounts/new.html.haml')
         end
         
         it "should send the account object to the view" do
@@ -243,7 +243,7 @@ describe AccountsController do
         
         it "should redirect to the account index page" do
           get :edit, :id => @account.id
-          response.should redirect_to accounts_path
+          response.should redirect_to(accounts_path)
           flash[:warning].should == "Account does not exist"
         end
       end
@@ -303,7 +303,7 @@ describe AccountsController do
 			    
 					it "should redirect to the index page" do
 					  put :update, { :id => @account.id, :account => @valid_params }
-						response.should redirect_to :action => 'index', :account_id => @account.id
+						response.should redirect_to(:action => 'index', :account_id => @account.id)
 					end
 					
 					it "should flash a notice to the user about a successful update" do
@@ -324,7 +324,7 @@ describe AccountsController do
 			    
 				  it "should render the edit page" do
 				    put :update, { :id => @account.id, :account => @valid_params }
-				    response.should render_template 'accounts/edit.html'
+				    response.should render_template('accounts/edit.html')
 			    end
 			    
 			    it "should flash an error to the user" do
@@ -348,7 +348,7 @@ describe AccountsController do
 			  it "should redirect to the account index page" do
 			    @account.should_not_receive(:update_attributes)
 			    put :update, { :id => @account.id, :account => @valid_params }
-			    response.should redirect_to accounts_path
+			    response.should redirect_to(accounts_path)
 			    flash[:warning].should == "Account does not exist"
 		    end
 		  end

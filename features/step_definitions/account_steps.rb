@@ -179,7 +179,7 @@ end
 
 Then /^I should see the rendered template for "([^\"]*)"$/ do |path_name|
   template = (path_to(path_name) + ".html")[1..-1]
-  response.should render_template template
+  response.should render_template(template)
 end
 
 Then /^I should see an error indicating "([^\"]*)" "([^\"]*)"$/ do |field_name,error_message|
@@ -192,7 +192,7 @@ Then /^I should be redirected to (.*)$/ do |page_name|
 end
 
 Then /^I should see the correct amount on the account$/ do
-  response.should contain "Amount:$#{@new_amount}"
+  response.should contain("Amount:$#{@new_amount}")
   Account.find(@account.id).amount.to_s.should == @new_amount.to_s
 end
 

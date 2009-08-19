@@ -182,10 +182,26 @@ describe Account do
   end #/initialize
   
   describe "#validation" do
+    def setUser(account)
+      @user = mock_model(User)
+      account.user = @user
+    end
+    
+    context "User" do
+      it "should be required" do
+        account = Account.new(@valid_params)
+        
+        valid = account.valid?
+        account.errors.full_messages.should == ["User can't be blank"]
+        valid.should be_false
+      end
+    end
+    
     context "Name" do
       it "should be required" do
         @valid_params["name"] = nil
         account = Account.new(@valid_params)
+        setUser(account)
         valid = account.valid?
         account.errors.full_messages.should == ["Name can't be blank"]
         valid.should be_false
@@ -196,6 +212,7 @@ describe Account do
       it "should be required" do
         @valid_params["priority"] = nil
         account = Account.new(@valid_params)
+        setUser(account)
         valid = account.valid?
         account.errors.full_messages.should == ["Priority can't be blank"]
         valid.should be_false
@@ -206,6 +223,7 @@ describe Account do
       it "should be required" do
         @valid_params["add_per_month"] = nil
         account = Account.new(@valid_params)
+        setUser(account)
         valid = account.valid?
         account.errors.full_messages.should include("Add per month can't be blank")
         valid.should be_false
@@ -214,6 +232,7 @@ describe Account do
       it "should ignore non-numerical data" do
         @valid_params["add_per_month"] = "Bob"
         account = Account.new(@valid_params)
+        setUser(account)
         valid = account.valid?
         account.add_per_month.should == 0
       end
@@ -221,6 +240,7 @@ describe Account do
       it "should allow two digits following a decimal point" do
         @valid_params["add_per_month"] = "374.82"
         account = Account.new(@valid_params)
+        setUser(account)
         valid = account.valid?
         account.errors.full_messages.should == []
         valid.should be_true
@@ -229,6 +249,7 @@ describe Account do
       it "should allow more than two digits following a decimal point" do
         @valid_params["add_per_month"] = "874.238293"
         account = Account.new(@valid_params)
+        setUser(account)
         valid = account.valid?
         account.errors.full_messages.should == []
         valid.should be_true
@@ -237,6 +258,7 @@ describe Account do
       it "should allow negative numbers" do
         @valid_params["add_per_month"] = "-104.72"
         account = Account.new(@valid_params)
+        setUser(account)
         valid = account.valid?
         account.errors.full_messages.should == []
         valid.should be_true
@@ -247,6 +269,7 @@ describe Account do
           @valid_params["add_per_month_as_percent"] = "1"
           @valid_params["add_per_month"] = "100.05"
           account = Account.new(@valid_params)
+          setUser(account)
           valid = account.valid?
           account.errors.full_messages.should == ["Add per month cannot be greater than 100%"]
           valid.should be_false
@@ -259,6 +282,7 @@ describe Account do
         @valid_params["has_cap"] = "1"
         @valid_params["cap"] = nil
         account = Account.new(@valid_params)
+        setUser(account)
         valid = account.valid?
         account.cap.should == 0
         account.errors.full_messages.should == []
@@ -269,6 +293,7 @@ describe Account do
         @valid_params["has_cap"] = "0"
         @valid_params["cap"] = nil
         account = Account.new(@valid_params)
+        setUser(account)
         valid = account.valid?
         account.errors.full_messages.should == []
         valid.should be_true
@@ -278,6 +303,7 @@ describe Account do
         @valid_params["has_cap"] = "1"
         @valid_params["cap"] = "Bubbles"
         account = Account.new(@valid_params)
+        setUser(account)
         valid = account.valid?
         account.errors.full_messages.should == ["Cap is not a number"]
         valid.should be_false
@@ -289,6 +315,7 @@ describe Account do
         @valid_params["has_prerequisite"] = "1"
         @valid_params["prerequisite"] = nil
         account = Account.new(@valid_params)
+        setUser(account)
         valid = account.valid?
         account.errors.full_messages.should == ["Prerequisite is required if 'Has Prerequisite' is selected"]
         valid.should be_false
@@ -298,6 +325,7 @@ describe Account do
         @valid_params["has_prerequisite"] = "0"
         @valid_params["prerequisite"] = nil
         account = Account.new(@valid_params)
+        setUser(account)
         valid = account.valid?
         account.errors.full_messages.should == []
         valid.should be_true

@@ -66,7 +66,11 @@ end
 Then /^I should see how my funds were distributed$/ do
   @accounts.each do |account|
     changed = @samounts[account.name] - account.amount
-    response.should contain "Change:#{changed}"
+    if changed != 0
+      response.should contain("Change:#{changed}")
+    else
+      response.should_not contain("Change:#{changed}")
+    end
   end
 end
 

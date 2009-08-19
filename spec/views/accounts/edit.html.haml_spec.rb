@@ -15,6 +15,6 @@ describe 'accounts/edit' do
     assigns[:accounts] = @accounts
     assigns[:priority_options] = @priority_options
     render "accounts/edit.html"
-    response.should contain "rendered from partial"
+    response.should contain("rendered from partial")
   end
 end
