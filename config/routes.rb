@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-	map.resources :users, :collection => { :login => :get, :enter => :put }
+	map.resources :users, :collection => { :login => :get, :enter => :put, :logout => :get }
 	map.resources :accounts, :member => { :changefunds => :put }
 	map.resources :incomes
 	map.connect '/', :controller => 'accounts', :action => 'index'

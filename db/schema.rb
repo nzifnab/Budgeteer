@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090812184137) do
+ActiveRecord::Schema.define(:version => 20090825231449) do
 
   create_table "account_histories", :force => true do |t|
     t.integer  "account_id"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20090812184137) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.integer  "overflow_into_id"
   end
 
   create_table "incomes", :force => true do |t|

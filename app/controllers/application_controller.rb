@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password
   
+  before_filter :send_current_user
+  
   def verify_current_user
     unless current_user
       redirect_to login_users_path
@@ -23,5 +25,9 @@ class ApplicationController < ActionController::Base
     else
       return false
     end
+  end
+  
+  def send_current_user
+    @current_user = current_user
   end
 end

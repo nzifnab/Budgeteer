@@ -2,6 +2,11 @@ class UsersController < ApplicationController
 	def login
 	end
 	
+	def logout
+	  session[:user_id] = nil
+	  redirect_to accounts_path
+  end
+	
 	def enter
 		if( User.authenticate( params[:user][:username], params[:user][:password] ) )
 			user = User.find_by_username(params[:user][:username])

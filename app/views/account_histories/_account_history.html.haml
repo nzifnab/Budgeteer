@@ -2,7 +2,7 @@
   .row
     .row_field= is_history ? "Date" : "Account"
     .row_value= is_history ? account_history.created_at_date : account_history.account.name
-  .row
+  .row{:style => 'clear:both;'}
     .row_field> Change:
     .row_value= account_history.amount
   %div{ :id => "history_description_#{account_history.id}", :class => "history_description" }>
@@ -13,7 +13,7 @@ function account_history_show_description_#{account_history.id}()
 hist_obj = $("history_description_#{account_history.id}")
 if( hist_obj.innerHTML == "" )
 {
-hist_obj.innerHTML = "#{escape_javascript(account_history.description)}";
+hist_obj.innerHTML = "<pre>#{escape_javascript(account_history.description)}</pre>";
 }else
 {
 hist_obj.innerHTML = ""

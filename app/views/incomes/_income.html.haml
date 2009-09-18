@@ -1,0 +1,14 @@
+.income_history
+  %div{:id => "income_row_#{income.id}", :class => "income_row_#{(highlight && highlight == income) ? 'highlight' : cycle('odd', 'even')}"}
+    .row_title Date: #{income.created_at_date}&nbsp;&nbsp;
+    %br
+    %br
+    .row_content
+      .row
+        .row_field> Amount:
+        .row_value $#{income.amount}
+    .row_content
+      .row
+        .row_field> Distribution:
+        .row_value= link_to "View", :controller => 'incomes', :action => 'index', :income_id => income.id
+    %br.clear

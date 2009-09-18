@@ -26,6 +26,9 @@
         .row_field> Prerequisite:
         .row_value= account.prerequisite ? account.prerequisite.name : "NONE"
       .row
+        .row_field> Overflow Into:
+        .row_value= account.does_overflow? ? account.overflow_into.name : "NONE"
+      .row
         .row_field> Status:
         %div{ :class => ( account.enabled ? "row_enabled" : "row_disabled" ) }
           = account.enabled ? "enabled" : "disabled"

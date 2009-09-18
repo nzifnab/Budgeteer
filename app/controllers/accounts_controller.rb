@@ -1,6 +1,6 @@
 class AccountsController < ApplicationController
   before_filter :verify_current_user
-  
+
   def new
     @account = Account.new
     @priority_options = Account::priority_options
@@ -18,7 +18,7 @@ class AccountsController < ApplicationController
 
 	def update
 		@account = Account.find(params[:id])
-		
+
 		if @account.user == current_user
   		if @account.update_attributes(params[:account])
   		  flash[:notice] = "Editing account was successful."
@@ -34,7 +34,7 @@ class AccountsController < ApplicationController
 	    redirect_to accounts_path
     end
 	end
-  
+
   def create
     @account = Account.new(params[:account])
     @account.user_id = current_user.id
@@ -46,7 +46,7 @@ class AccountsController < ApplicationController
       render :action => 'new'
     end
   end
-  
+
   def edit
     @account = Account.find(params[:id])
     if @account.user == current_user
@@ -57,25 +57,25 @@ class AccountsController < ApplicationController
       redirect_to accounts_path
     end
   end
-  
+
   def changefunds
     index
     @account = Account.find(params[:id])
-    
+
     if params[:account_history][:amount].to_f <= 0
       flash[:warning] = "Error Occurred - The amount for your transaction must be a number greater than 0!"
       @account_history = AccountHistory.new(params[:account_history])
       render 'accounts/index'
       return
     end
-    
+
     if params[:commit] == "Withdraw"
       params[:account_history][:amount] = (params[:account_history][:amount].to_f * (-1)).to_s
     end
-    
+
     @account_history = AccountHistory.new(params[:account_history])
     @account_history.account = @account
-    
+
     if @account_history.save
       @account.amount ||= 0
       @account.amount += params[:account_history][:amount].to_f
@@ -87,7 +87,7 @@ class AccountsController < ApplicationController
       @account = nil
       flash[:warning] = "Error occurred"
     end
-    
+
     render 'accounts/index'
   end
 end

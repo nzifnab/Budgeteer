@@ -24,6 +24,9 @@ Given /^I have created some accounts$/ do
   @accounts << Account.create!( :name => 'name16', :priority => 6, :add_per_month => 150, :add_per_month_as_percent => false, :amount => 300, :cap => 300, :enabled => true, :user_id => @user.id )
   #prerequisite = 'name16'
   @accounts << Account.create!( :name => 'name17', :priority => 7, :add_per_month => 30, :add_per_month_as_percent => true, :prerequisite => @accounts[15], :enabled => true, :user_id => @user.id )
+  @accounts << Account.create!( :name => 'name18', :priority => 9, :add_per_month => 10, :add_per_month_as_percent => true, :enabled => true, :user_id => @user.id )
+  #overflows_into = 'name18'
+  @accounts << Account.create!( :name => 'name19', :priority => 9, :add_per_month => 50, :add_per_month_as_percent => false, :amount => 45, :cap => 55, :overflow_into => @accounts[17], :enabled => true, :user_id => @user.id)
 end
 
 When /^I send an income amount$/ do
@@ -48,12 +51,14 @@ Then /^my funds should be distributed correctly$/ do
     "name9" => 226.25,
     "name10" => 0,
     "name11" => 0,
-    "name12" => -76.7,
-    "name13" => 105.825,
+    "name12" => -76.7, #->55.825
+    "name13" => 50.2425, #45.2425, :0.2425(50.2425), ->0
     "name14" => 25.0,
     "name15" => 100.0,
     "name16" => 300.0,
-    "name17" => 119.625
+    "name17" => 119.625,
+    "name18" => 45.5825, #50.5825,   :5.5825, ->50.2425 (first pass), :40(45.5825), ->0.2425 (overflow pass)
+    "name19" => 55, # :10(55), ->40.2425 (overflow 40 to #18)
   }
   
   @accounts.each do |account|
@@ -64,12 +69,11 @@ Then /^my funds should be distributed correctly$/ do
 end
 
 Then /^I should see how my funds were distributed$/ do
+  pending
   @accounts.each do |account|
     changed = @samounts[account.name] - account.amount
     if changed != 0
       response.should contain("Change:#{changed}")
-    else
-      response.should_not contain("Change:#{changed}")
     end
   end
 end

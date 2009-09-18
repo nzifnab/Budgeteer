@@ -2,8 +2,8 @@ class IncomesController < ApplicationController
   def create
     @income = Income.new(params[:income])
     @income.user = current_user
-    if @income.save && @income.distribute_income
-      flash[:notice] = "Income saved"
+    if @income.save && (income_left = @income.distribute_income)
+      flash[:notice] = "Income saved ($#{income_left} remaining after distribution)"
       @history = AccountHistory.find( :all, :conditions => { :income_id => @income } )
       @income = Income.new
     else
@@ -12,5 +12,13 @@ class IncomesController < ApplicationController
     @accounts = Account.find_all_by_user_id( current_user.id, :order => 'enabled DESC, priority ASC, amount DESC, name ASC' )
     @account = Account.find( params[:account_id] ) if params[:account_id]
     render 'accounts/index'
+  end
+
+  def index
+    @incomes = Income.find_all_by_user_id( current_user.id, :order => 'created_at DESC, amount DESC' )
+    if params[:income_id]
+      @income = Income.find( params[:income_id] )
+      @history = @income.account_histories
+    end
   end
 end

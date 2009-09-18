@@ -62,6 +62,7 @@ When /^I fill in the form for account "([^\"]*)" with valid data$/ do |account_n
   uncheck("Add Per Month As Percent")
   uncheck("Has Cap")
   uncheck("Has Prerequisite")
+  uncheck("Does Overflow")
   check("Enabled")
 end
 

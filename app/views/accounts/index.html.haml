@@ -1,4 +1,5 @@
-%h1 Accounts
+%h1.pageTitle Accounts
+%h1.pageTitle> Total Funds: $#{@accounts.sum(&:amount)}
 - odd_or_even = 'odd'
 .content_left
   - @accounts.each do |account|
@@ -12,6 +13,7 @@
   #account_history_list
     %h2= @account ? "#{@account.name} History" : "Income Distribution"
     = render :partial => 'account_histories/account_history', :collection => @history, :locals => { :is_history => (@account ? true : false) }
+%br.clear
 <script type="text/javascript">
 \//<!--
 function highlighted()

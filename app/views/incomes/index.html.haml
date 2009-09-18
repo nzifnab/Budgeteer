@@ -1,0 +1,11 @@
+%h1.pageTitle Income
+%h1.pageTitle Total Income: $#{@incomes.sum(&:amount)}
+.content_left
+  - @incomes.each do |income|
+    = render :partial => 'incomes/income', :locals => {:income => income, :highlight => (@income || nil)}
+- if @history
+  #account_history_list
+    %h2=" Income Distribution"
+    %h2{:style => 'text-align:center;'}="#{@income.created_at_date} - $#{@income.amount}"
+    = render :partial => 'account_histories/account_history', :collection => @history, :locals => {:is_history => false}
+%br.clear

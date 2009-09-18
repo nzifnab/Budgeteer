@@ -54,15 +54,23 @@ a {
     a.edit_row:visited {
       color: #000000; }
 
-div.account_row_odd, div.account_row_even, div.account_row_highlight {
+h1.pageTitle {
+  color: #004100;
+  text-align: center; }
+
+div.account_row_odd, div.account_row_even, div.account_row_highlight, div.income_row_odd, div.income_row_even {
   border-style: solid;
   border-width: 1px;
   border-color: #bffebf;
   padding: 4px; }
-div.account_row_highlight {
+div.income_row_odd {
+  background-color: #004100; }
+div.income_row_even {
+  background-color: #00A000; }
+div.account_row_highlight, div.income_row_highlight {
   background-color: lime;
   border-width: 2px;
-  border-color: !border_color; }
+  border-color: #005e00; }
 div.account_row_disabled {
   border-style: solid;
   border-width: 1px;
@@ -205,9 +213,30 @@ div.account_history_row {
   padding: 3px;
   background-color: #004100;
   margin-top: 5px; }
-div.history_description {
+div.history_description pre {
   background-color: #80fe80;
-  color: #004100; }
+  color: #004100;
+  font-weight: bold; }
+div.mainBody {
+  width: 1500px;
+  min-height: 800px;
+  background-color: #BBBBBB; }
+div.topNav {
+  background-color: #80fe80;
+  width: 100%; }
+div.navButton {
+  background-color: #004100;
+  border-style: outset;
+  border-width: 2px;
+  border-color: #005e00;
+  color: #bffebf;
+  width: 140px;
+  height: 20px;
+  float: left;
+  margin: 5px; }
+  div.navButton:hover {
+    background-color: #bffebf;
+    color: #004100; }
 
 .fieldWithErrors {
   padding: 2px;

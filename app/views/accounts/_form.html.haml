@@ -37,6 +37,15 @@
         %br
         = f.select(:prerequisite_id, accounts.collect {|a| [a.name, a.id]}, {:include_blank => true})
     %tr
+      %td
+        = f.label :does_overflow?, "Does Overflow?"
+        %br
+        = f.label :overflow_into_id, "Overflows Into"
+      %td
+        = f.check_box :does_overflow?
+        %br
+        = f.select(:overflow_into_id, accounts.collect {|a| [a.name, a.id]}, {:include_blank => true})
+    %tr
       %td= f.label :enabled, "Enabled?"
       %td
         = f.check_box :enabled

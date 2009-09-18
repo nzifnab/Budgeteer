@@ -41,6 +41,7 @@ Feature:  Accounts
 		| account5     | 130    | fill_in     | Add Per Month       |        | check       | Add Per Month As Percent | Add per month | cannot be greater than 100% |
 		| account7     |        | check       | Has Prerequisite    |        | select      | Prerequisite             | Prerequisite | is required if 'Has Prerequisite' is selected |
 		| account8     |        | check       | Has Cap             | Bob    | fill_in     | Cap                      | Cap | is not a number   |
+		| account9     |        | check       | Does Overflow       |        | select      | Overflows Into           | Overflow into | is required if 'Does Overflow' is selected |
 		
 		
   Scenario: Accounts display on account index page

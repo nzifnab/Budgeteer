@@ -1,10 +1,12 @@
 class Account < ActiveRecord::Base
   belongs_to :prerequisite, :class_name => "Account"
+  belongs_to :overflow_into, :class_name => "Account"
   belongs_to :user
   has_many :account_histories
   validates_presence_of :name, :priority, :add_per_month, :user_id
   validates_presence_of :cap, :if => Proc.new{ |account| account.has_cap }, :message => "is required with 'Has a Cap' selected"
   validates_presence_of :prerequisite_id, :if => Proc.new{ |account| account.has_prerequisite }, :message => "is required if 'Has Prerequisite' is selected"
+  validates_presence_of :overflow_into_id, :if => Proc.new{ |account| account.does_overflow }, :message => "is required if 'Does Overflow' is selected"
   validates_numericality_of :add_per_month, :unless => Proc.new { |account| account.add_per_month_as_percent == true }
   validates_numericality_of :add_per_month, :less_than_or_equal_to => 100, :message => "cannot be greater than 100%", :if => Proc.new { |account| account.add_per_month_as_percent == true }
   validates_numericality_of :cap, :allow_nil => true
@@ -32,25 +34,21 @@ class Account < ActiveRecord::Base
       @has_prerequisite = true
     end
     
+    if attributes["does_overflow"] == false || attributes["does_overflow"] == "0"
+      @does_overflow = false
+      attributes["overflow_into_id"] = nil
+    elsif attributes["does_overflow"] == true || attributes["does_overflow"] == "1"
+      @does_overflow = true
+    end
+    
     super(attributes)
   end
   
   def distribute!(given_amount, income, priority_start_amount, prereq_left = nil)
-    if self.enabled && ((self.has_prerequisite? && self.prerequisite.amount >= self.prerequisite.cap) || !self.has_prerequisite?)
-      use_amt = amount_to_use(priority_start_amount)
-      amts = [given_amount, use_amt, amount_till_cap, amount_till_add_per_month, prereq_left].
-      map {|amt|
-        if amt && amt < 0
-          0
-        else
-          amt
-        end
-      }
-      
-      amts.delete(nil)
-      
-      amt = amts.min
-      
+    this_left = prereq_left
+    if self.should_distribute?
+      amt = distribute_use_amount(given_amount, priority_start_amount, prereq_left)
+
       if amt > 0
         self.amount = self.amount + amt
         self.save
@@ -58,19 +56,27 @@ class Account < ActiveRecord::Base
         
         given_amount -= amt
         
-        if has_cap? && self.amount >= cap
-          this_left = use_amt - amt
+        if self.has_reached_cap?
+          this_left = amount_to_use(priority_start_amount) - amt
           if prereq_left
             this_left = prereq_left - this_left
           end
           
           if this_left > 0
-            prereqs_fullfilled_accounts = Account.find( :all, :conditions => ["user_id = ? AND enabled = true AND prerequisite_id = ? AND priority <= ?", self.user, self.id, self.priority ], :order => "`priority` ASC, `add_per_month_as_percent` DESC" )
+            if self.does_overflow?
+              amt_left = self.overflow_into.distribute_as_overflow!(this_left, income)
+              given_amount -= (this_left - amt_left)
+              this_left = amt_left
+            end
             
-            prereqs_fullfilled_accounts.each do |prereqqed_account|
-              returned = prereqqed_account.distribute!(given_amount, income, priority_start_amount, this_left)
-              given_amount = returned[:given_amount]
-              this_left = returned[:this_left]
+            if this_left > 0
+              prereqs_fullfilled_accounts = Account.find( :all, :conditions => ["user_id = ? AND enabled = true AND prerequisite_id = ? AND priority <= ?", self.user, self.id, self.priority ], :order => "`priority` ASC, `add_per_month_as_percent` DESC" )
+            
+              prereqs_fullfilled_accounts.each do |prereqqed_account|
+                returned = prereqqed_account.distribute!(given_amount, income, priority_start_amount, this_left)
+                given_amount = returned[:given_amount]
+                this_left = returned[:this_left]
+              end
             end
           end
         end
@@ -81,6 +87,60 @@ class Account < ActiveRecord::Base
     else
       return given_amount
     end
+  end
+  
+  def distribute_as_overflow!(amt, income)
+    amt = (amt < 0 ? 0 : amt)
+    amount_left = amt
+    changed = 0
+    
+    if self.has_cap?
+      cap_amt = (self.amount_till_cap < 0 ? 0 : self.amount_till_cap)
+      if amt <= cap_amt
+        self.amount = self.amount + amt
+        self.save
+        changed = amt
+      else
+        self.amount = self.amount + cap_amt
+        self.save
+        changed = cap_amt
+      end
+    else
+      self.amount = self.amount + amt
+      self.save
+      changed = amt
+    end
+    
+    if changed != 0
+      amount_left -= changed
+      history = AccountHistory.create!( :amount => changed, :account_id => self.id, :income_id => income.id, :description => (income.description + " overflow") )
+    end
+    
+    return amount_left
+  end
+  
+  def has_reached_cap?
+    return self.has_cap? && self.amount >= self.cap
+  end
+  
+  def distribute_use_amount(given_amount, priority_start_amount, prereq_left = nil, amount_for_overflow = false)
+    use_amt = amount_to_use(priority_start_amount)
+    amts = [given_amount, use_amt, amount_for_overflow ? nil : amount_till_cap, amount_for_overflow ? nil : amount_till_add_per_month, prereq_left].
+    map {|amt|
+      if amt && amt < 0
+        0
+      else
+        amt
+      end
+    }
+    
+    amts.delete(nil)
+    
+    return amts.min
+  end
+  
+  def should_distribute?
+    return (self.enabled && ((self.has_prerequisite? && self.prerequisite.amount >= self.prerequisite.cap) || !self.has_prerequisite?))
   end
   
   def amount
@@ -137,8 +197,20 @@ class Account < ActiveRecord::Base
     end
   end
   
+  def does_overflow?
+    if self.overflow_into
+      return true
+    else
+      return does_overflow ? true : false
+    end
+  end
+  
   def has_prerequisite
     return @has_prerequisite
+  end
+  
+  def does_overflow
+    return @does_overflow
   end
   
   def has_cap=(value)
@@ -152,6 +224,12 @@ class Account < ActiveRecord::Base
   def has_prerequisite=(value)
     if(value == "0" || value == false)
       self.prerequisite = nil
+    end
+  end
+  
+  def does_overflow=(value)
+    if(value == "0" || value == false)
+      self.overflow_into = nil
     end
   end
 end

@@ -7,7 +7,19 @@
     = stylesheet_link_tag 'main'
     = javascript_include_tag :defaults
   %body{ ( controller.action_name == "index" ) ? { :onload => "highlighted();" } : {} }
-    %p.flash_notice= flash[:notice]
-    %p.flash_warning= flash[:warning]
-
-    = yield
+    .mainBody
+      .topNav
+        -if @current_user
+          %a{ :href => '/accounts' }
+            .navButton Home
+          %a{ :href => '/accounts/new' }
+            .navButton New Account
+          %a{ :href => '/incomes' }
+            .navButton Income History
+          %a{ :href => '/users/logout' }
+            .navButton Logout
+      %br.clear
+      .bodyContent
+        %p.flash_notice= flash[:notice]
+        %p.flash_warning= flash[:warning]
+        = yield
