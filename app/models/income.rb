@@ -18,7 +18,7 @@ class Income < ActiveRecord::Base
         current_priority = loop_account.priority
       end
 
-      if loop_account.has_reached_cap? && loop_account.does_overflow?
+      if loop_account.has_reached_cap? && loop_account.does_overflow? && loop_account.has_fulfilled_prerequisite?
         use_amt = loop_account.distribute_use_amount(amount_left, priority_start_amount, nil, true)
         return false unless( amount_left -= (use_amt - loop_account.overflow_into.distribute_as_overflow!(use_amt, self) ) )
       else

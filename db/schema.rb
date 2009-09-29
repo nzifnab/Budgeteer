@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090825231449) do
+ActiveRecord::Schema.define(:version => 20090918230949) do
 
   create_table "account_histories", :force => true do |t|
     t.integer  "account_id"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20090825231449) do
     t.string   "password_hash"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "non_distributed_funds"
   end
 
 end
