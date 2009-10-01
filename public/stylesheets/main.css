@@ -46,7 +46,7 @@ a {
     padding-top: 3px;
     padding-right: 4px;
     padding-bottom: 3px;
-    margin-top: 3px;
+    float: left;
     margin-left: 3px;
     border-style: solid;
     border-width: 1px;
@@ -92,6 +92,19 @@ div.row_title {
   width: 300px;
   background-color: #004100;
   color: #80fe80; }
+div.row_account_type {
+  font-size: 13px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #3F3F3F;
+  padding: 2px;
+  padding-left: 4px;
+  float: left;
+  width: 118px;
+  background-color: #80fe80;
+  color: #004100; }
 div.row_content {
   float: left;
   vertical-align: top; }
@@ -158,6 +171,15 @@ div.priority_9 {
   background-color: #70e970; }
 div.priority_10 {
   background-color: #7efe7e; }
+div.dashboard {
+  background-color: #004100;
+  float: right;
+  margin-top: 5px;
+  margin-right: 5px;
+  width: 300px;
+  min-height: 100px;
+  padding: 5px;
+  color: #80fe80; }
 div.row_form {
   float: right; }
   div.row_form form.account_history_form {

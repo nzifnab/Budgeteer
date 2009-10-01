@@ -5,10 +5,21 @@ class AccountsController < ApplicationController
     @account = Account.new
     @priority_options = Account::priority_options
     @accounts = Account.find_all_by_user_id(current_user.id)
+    @types = AccountType.find(:all)
   end
 
   def index
     @accounts = Account.find_all_by_user_id( current_user.id, :order => 'enabled DESC, priority ASC, amount DESC, name ASC' )
+    @type_amounts = {}
+    savings_account = current_user.accounts.find(:all, :conditions => {:account_type_id => AccountType.SAVINGS})
+    @type_amounts["Savings"] = savings_account.map {|account| account.amount}.sum
+    checking_account = current_user.accounts.find(:all, :conditions => {:account_type_id => AccountType.CHECKING})
+    @type_amounts["Checking"] = checking_account.map {|account| account.amount}.sum
+    investment_account = current_user.accounts.find(:all, :conditions => {:account_type_id => AccountType.INVESTMENT})
+    @type_amounts["Investment"] = investment_account.map {|account| account.amount}.sum
+    credit_card_account = current_user.accounts.find(:all, :conditions => {:account_type_id => AccountType.CREDIT_CARD})
+    @type_amounts["Credit Card"] = credit_card_account.map{|account| account.amount}.sum
+
     if params[:account_id]
       @account = Account.find( params[:account_id] )
       @history = AccountHistory.find( :all, :conditions => { :account_id => @account }, :order => 'created_at DESC')
@@ -27,6 +38,7 @@ class AccountsController < ApplicationController
   	    flash[:warning] = "An error has ocurred when updating the account."
   	    @priority_options = Account.priority_options
         @accounts = Account.find_all_by_user_id(current_user.id)
+        @types = AccountType.find(:all)
   	    render :action => 'edit'
   	  end
 	  else
@@ -43,6 +55,7 @@ class AccountsController < ApplicationController
     else
       @priority_options = Account::priority_options
       @accounts = Account.find_all_by_user_id(current_user.id)
+      @types = AccountType.find(:all)
       render :action => 'new'
     end
   end
@@ -52,6 +65,7 @@ class AccountsController < ApplicationController
     if @account.user == current_user
       @priority_options = Account.priority_options
       @accounts = Account.find_all_by_user_id(current_user.id)
+      @types = AccountType.find(:all)
     else
       flash[:warning] = "Account does not exist"
       redirect_to accounts_path

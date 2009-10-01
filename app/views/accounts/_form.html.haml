@@ -51,4 +51,7 @@
         = f.check_box :enabled
         %br
     %tr
+      %td= f.label :account_type_id, "Account Type"
+      %td= f.select(:account_type_id, types.collect {|a| [a.description, a.id]}, {:include_blank => true})
+    %tr
       %td{ :colspan => "2", :align => "center" }= f.submit "Submit"

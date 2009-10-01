@@ -1,3 +1,9 @@
+- content_for :dashboard do
+  %h3 Account Type Totals
+  - @type_amounts.each_pair do |type, amount|
+    = "#{type}:  $#{amount}"
+    %br
+  = "Undistributed:  $#{@current_user.non_distributed_funds}" if @current_user.non_distributed_funds.present?
 %h1.pageTitle Accounts
 %h1.pageTitle> Total Funds: $#{@accounts.sum(&:amount)}
 - odd_or_even = 'odd'
@@ -27,7 +33,7 @@ function highlighted()
   {
   $("account_row_#{@account.id}").className = "account_row_#{display_type( @account, nil )}"
   }
-  
+
 - if @history
   function account_history_show_description(history_id)
   {

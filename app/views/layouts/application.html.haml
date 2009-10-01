@@ -18,7 +18,9 @@
             .navButton Income History
           %a{ :href => '/users/logout' }
             .navButton Logout
-      %br.clear
+      .dashboard
+        = yield(:dashboard)
+      %br{:style => "clear:left;"}
       .bodyContent
         %p.flash_notice= flash[:notice]
         %p.flash_warning= flash[:warning]

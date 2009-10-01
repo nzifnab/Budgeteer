@@ -2,11 +2,13 @@ class Account < ActiveRecord::Base
   belongs_to :prerequisite, :class_name => "Account"
   belongs_to :overflow_into, :class_name => "Account"
   belongs_to :user
+  belongs_to :account_type
   has_many :account_histories
   validates_presence_of :name, :priority, :add_per_month, :user_id
   validates_presence_of :cap, :if => Proc.new{ |account| account.has_cap }, :message => "is required with 'Has a Cap' selected"
   validates_presence_of :prerequisite_id, :if => Proc.new{ |account| account.has_prerequisite }, :message => "is required if 'Has Prerequisite' is selected"
   validates_presence_of :overflow_into_id, :if => Proc.new{ |account| account.does_overflow }, :message => "is required if 'Does Overflow' is selected"
+  validates_presence_of :account_type_id
   validates_numericality_of :add_per_month, :unless => Proc.new { |account| account.add_per_month_as_percent == true }
   validates_numericality_of :add_per_month, :less_than_or_equal_to => 100, :message => "cannot be greater than 100%", :if => Proc.new { |account| account.add_per_month_as_percent == true }
   validates_numericality_of :cap, :allow_nil => true

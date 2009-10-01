@@ -2,6 +2,7 @@
   %div{ :id => "account_row_#{account.id}", :class => "account_row_#{display_type( account, highlight )}" }
     .row_title Name: #{account.name}&nbsp;&nbsp;
     = link_to "Edit", edit_account_path(account), :id => "edit_account_#{account.id}", :class => "edit_row"
+    .row_account_type= account.account_type.present? ? account.account_type.description : "NONE"
     .row_form
       = render :partial => 'accounts/changefunds_form', :locals => {:account_history => account_history, :account => account}
     %br

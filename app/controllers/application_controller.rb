@@ -7,9 +7,9 @@ class ApplicationController < ActionController::Base
 
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password
-  
+
   before_filter :send_current_user
-  
+
   def verify_current_user
     unless current_user
       redirect_to login_users_path
@@ -18,16 +18,16 @@ class ApplicationController < ActionController::Base
       return true
     end
   end
-  
+
   def current_user
     if session[:user_id]
-      return User.find(session[:user_id]) || false
+      @current_user ||= (User.find(session[:user_id]) || false)
     else
       return false
     end
   end
-  
+
   def send_current_user
-    @current_user = current_user
+    current_user
   end
 end

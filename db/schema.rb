@@ -9,13 +9,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090918230949) do
+ActiveRecord::Schema.define(:version => 20091001193905) do
 
   create_table "account_histories", :force => true do |t|
     t.integer  "account_id"
     t.float    "amount"
     t.text     "description"
     t.integer  "income_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "account_types", :force => true do |t|
+    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -33,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20090918230949) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "overflow_into_id"
+    t.integer  "account_type_id"
   end
 
   create_table "incomes", :force => true do |t|
