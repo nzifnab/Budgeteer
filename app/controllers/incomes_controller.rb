@@ -17,6 +17,7 @@ class IncomesController < ApplicationController
     end
     @accounts = Account.find_all_by_user_id( current_user.id, :order => 'enabled DESC, priority ASC, amount DESC, name ASC' )
     @account = Account.find( params[:account_id] ) if params[:account_id]
+    send_type_amounts
     render 'accounts/index'
   end
 

@@ -4,8 +4,14 @@ class AccountHistory < ActiveRecord::Base
   validates_presence_of :amount, :description
   validates_numericality_of :amount
   validates_exclusion_of :amount, :in => {0, 0.0}
-  
+
   def created_at_date
     self.created_at.strftime( '%m-%d-%y' )
+  end
+
+  def destroy
+    account.amount -= self.amount
+    account.save
+    super
   end
 end

@@ -1,6 +1,6 @@
 class Income < ActiveRecord::Base
   belongs_to :user
-  has_many :account_histories
+  has_many :account_histories, :dependent => :destroy
 
   validates_presence_of :amount, :description, :user_id
   validates_numericality_of :amount, :greater_than => 0
