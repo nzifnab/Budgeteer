@@ -1,6 +1,6 @@
 .income_history
   %div{:id => "income_row_#{income.id}", :class => "income_row_#{(highlight && highlight == income) ? 'highlight' : cycle('odd', 'even')}"}
-    .row_title Date: #{income.created_at_date}&nbsp;&nbsp;
+    .row_title{:style => "width:450px;"} #{income.description}: #{income.created_at_date}&nbsp;&nbsp;
     %br
     %br
     .row_content
